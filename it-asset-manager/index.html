@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Administrador local de activos de TI" />
+  <title>AssetDesk | IT Asset Manager</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">▣</span><span>Asset<span class="accent">Desk</span><small>IT Asset Manager</small></span></div>
+      <div class="sidebar-label">WORKSPACE</div>
+      <a class="nav active" href="#inventory">▦ &nbsp; Inventory</a>
+      <a class="nav" href="#overview">◫ &nbsp; Overview</a>
+      <div class="sidebar-bottom">LOCAL-FIRST APPLICATION<br /><span>Datos almacenados en este navegador</span></div>
+    </aside>
+    <main>
+      <header><div><span class="eyebrow">IT OPERATIONS / INVENTORY</span><h1>Asset management</h1><p>Organiza equipos, responsables y estados desde un solo lugar.</p></div><button id="addBtn" class="primary">＋ Nuevo equipo</button></header>
+      <section id="overview" class="stats" aria-label="Resumen del inventario">
+        <article class="stat"><span>Activos totales</span><strong id="totalCount">0</strong><small>Equipos registrados</small></article>
+        <article class="stat"><span>En uso</span><strong id="activeCount">0</strong><small>Asignados / activos</small></article>
+        <article class="stat"><span>En mantenimiento</span><strong id="maintenanceCount">0</strong><small>Requieren atención</small></article>
+        <article class="stat"><span>Disponibles</span><strong id="availableCount">0</strong><small>Listos para asignar</small></article>
+      </section>
+      <section id="inventory" class="panel">
+        <div class="panel-head"><div><h2>Inventario</h2><p id="resultText">0 equipos encontrados</p></div><div class="actions"><button id="exportBtn" class="secondary">↓ Exportar CSV</button><button id="importBtn" class="secondary">↑ Importar JSON</button><button id="backupBtn" class="secondary">↓ Backup JSON</button><input id="importFile" type="file" accept=".json,application/json" hidden /></div></div>
+        <div class="filters"><label class="search">⌕ <input id="search" placeholder="Buscar por nombre, etiqueta, responsable..." autocomplete="off" /></label><select id="typeFilter" aria-label="Filtrar por tipo"><option value="">Todos los tipos</option><option>Laptop</option><option>Desktop</option><option>Monitor</option><option>Network</option><option>Other</option></select><select id="statusFilter" aria-label="Filtrar por estado"><option value="">Todos los estados</option><option>In use</option><option>Available</option><option>Maintenance</option><option>Retired</option></select></div>
+        <div class="table-wrap"><table><thead><tr><th>ASSET / TAG</th><th>TIPO</th><th>RESPONSABLE</th><th>ESTADO</th><th>COMPRA</th><th>ACCIONES</th></tr></thead><tbody id="rows"></tbody></table></div>
+        <div id="empty" class="empty" hidden>No se encontraron equipos. Prueba otros filtros o agrega uno nuevo.</div>
+      </section>
+      <footer>AssetDesk v1.0 · Demo sin servidor · No incluir información confidencial</footer>
+    </main>
+  </div>
+  <dialog id="assetDialog"><form id="assetForm" class="modal"><div class="modal-head"><div><span class="eyebrow">ASSET RECORD</span><h2 id="dialogTitle">Nuevo equipo</h2></div><button class="close" id="closeDialog" type="button" aria-label="Cerrar">✕</button></div><input type="hidden" id="assetId" /><label>Nombre del equipo *<input id="assetName" maxlength="100" required placeholder="Ej. Dell Latitude 5420" /></label><div class="two"><label>Etiqueta única *<input id="assetTag" maxlength="40" required placeholder="IT-001" /></label><label>Tipo *<select id="assetType" required><option>Laptop</option><option>Desktop</option><option>Monitor</option><option>Network</option><option>Other</option></select></label></div><label>Responsable<input id="assetOwner" maxlength="100" placeholder="Ej. Equipo de Soporte" /></label><div class="two"><label>Estado<select id="assetStatus"><option>In use</option><option>Available</option><option>Maintenance</option><option>Retired</option></select></label><label>Fecha de compra<input type="date" id="assetDate" /></label></div><label>Notas<textarea id="assetNotes" rows="3" maxlength="500" placeholder="Información adicional (opcional)"></textarea></label><p id="formError" role="alert" class="error" hidden></p><div class="modal-actions"><button type="button" id="cancelDialog" class="secondary">Cancelar</button><button class="primary" type="submit">Guardar equipo</button></div></form></dialog>
+  <div id="toast" role="status" aria-live="polite" class="toast" hidden></div>
+</body>
+</html>
